@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
+import { useAtom } from "jotai";
+import { modelPositionAtom } from "../atoms/stateAtoms";
 
 const Controls: React.FC = () => {
-  const [position, setPosition] = useState({ x: 0, y: 0, z: 0 });
+  const [position, setPosition] = useAtom(modelPositionAtom);
 
   const handleInputChange = (axis: "x" | "y" | "z", value: string) => {
     const numericValue = parseFloat(value) || 0;

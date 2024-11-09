@@ -2,11 +2,14 @@ import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { useAtomValue } from "jotai";
+import { modelPositionAtom } from "../atoms/stateAtoms";
 
 const Scene: React.FC = () => {
   const mountRef = useRef<HTMLDivElement | null>(null);
 
   const initCamPos = { x: 4, y: 2, z: 0 };
+  const modelPosition = useAtomValue(modelPositionAtom);
 
   useEffect(() => {
     if (!mountRef.current) return;
@@ -94,12 +97,13 @@ const Scene: React.FC = () => {
     /**
      * Model management
      */
+    let model: THREE.Group | undefined;
     const loader = new GLTFLoader();
     loader.load(
       "/assets/models/Red_Car.glb",
       (gltf) => {
-        const model = gltf.scene;
-        model.position.set(0, 0.25, 0);
+        model = gltf.scene;
+        model.position.set(modelPosition.x, modelPosition.y, modelPosition.z);
 
         model.castShadow = true;
         model.traverse((child) => {
@@ -138,6 +142,9 @@ const Scene: React.FC = () => {
      * Animate (rendering)
      */
     const animate = () => {
+      if (model) {
+        model.position.set(modelPosition.x, modelPosition.y, modelPosition.z);
+      }
       controls.update();
       renderer.render(scene, camera);
     };
@@ -147,7 +154,7 @@ const Scene: React.FC = () => {
     return () => {
       mountRef.current?.removeChild(renderer.domElement);
     };
-  }, []);
+  }, [modelPosition]);
 
   return <div ref={mountRef} />;
 };
