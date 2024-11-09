@@ -12,7 +12,7 @@ const Controls: React.FC = () => {
   };
 
   return (
-    <div className="p-4 bg-white shadow-md rounded-md w-52 absolute top-4 right-4">
+    <div className="p-4 bg-white shadow-md rounded-md w-52 absolute top-4 right-4 z-10">
       <h2 className="text-lg font-semibold mb-2">Model Position</h2>
       {["x", "y", "z"].map((axis) => (
         <div key={axis} className="mb-2">
