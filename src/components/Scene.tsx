@@ -10,6 +10,11 @@ const Scene: React.FC = () => {
 
   const initCamPos = { x: 4, y: 2, z: 0 };
   const modelPosition = useAtomValue(modelPositionAtom);
+  const modelPositionRef = useRef(modelPosition);
+
+  useEffect(() => {
+    modelPositionRef.current = modelPosition;
+  }, [modelPosition]);
 
   useEffect(() => {
     if (!mountRef.current) return;
@@ -103,7 +108,11 @@ const Scene: React.FC = () => {
       "/assets/models/Red_Car.glb",
       (gltf) => {
         model = gltf.scene;
-        model.position.set(modelPosition.x, modelPosition.y, modelPosition.z);
+        model.position.set(
+          modelPositionRef.current.x,
+          modelPositionRef.current.y,
+          modelPositionRef.current.z,
+        );
 
         model.castShadow = true;
         model.traverse((child) => {
@@ -143,7 +152,11 @@ const Scene: React.FC = () => {
      */
     const animate = () => {
       if (model) {
-        model.position.set(modelPosition.x, modelPosition.y, modelPosition.z);
+        model.position.set(
+          modelPositionRef.current.x,
+          modelPositionRef.current.y,
+          modelPositionRef.current.z,
+        );
       }
       controls.update();
       renderer.render(scene, camera);
@@ -154,7 +167,7 @@ const Scene: React.FC = () => {
     return () => {
       mountRef.current?.removeChild(renderer.domElement);
     };
-  }, [modelPosition]);
+  }, []);
 
   return <div ref={mountRef} />;
 };
