@@ -19,6 +19,7 @@ const Controls: React.FC = () => {
           <label className="block text-gray-700">{axis}:</label>
           <input
             type="number"
+            step="0.25"
             value={position[axis as "x" | "y" | "z"]}
             onChange={(e) =>
               handleInputChange(axis as "x" | "y" | "z", e.target.value)
