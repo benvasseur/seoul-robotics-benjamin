@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
+// import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 const Scene: React.FC = () => {
   const mountRef = useRef<HTMLDivElement | null>(null);
@@ -20,13 +22,14 @@ const Scene: React.FC = () => {
       0.1,
       1000,
     );
-    camera.position.z = 5;
-    camera.position.y = 2;
-    camera.position.x = 0.5;
+    camera.position.set(5, 2, 0.5);
 
     const renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
     mountRef.current.appendChild(renderer.domElement);
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const controls = new OrbitControls(camera, renderer.domElement); // controls will be needed later for interface i guess
 
     /**
      * Grid management
