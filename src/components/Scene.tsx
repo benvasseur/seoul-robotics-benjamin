@@ -165,6 +165,8 @@ const Scene: React.FC = () => {
 
     // Clean up on unmount
     return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("keydown", handleKeyDown);
       mountRef.current?.removeChild(renderer.domElement);
     };
   }, []);
