@@ -27,6 +27,7 @@ const Scene: React.FC = () => {
 
     const renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.shadowMap.enabled = true;
     mountRef.current.appendChild(renderer.domElement);
 
     /**
@@ -61,6 +62,17 @@ const Scene: React.FC = () => {
     window.addEventListener("keydown", handleKeyDown);
 
     /**
+     * Floor Creation
+     */
+    const mesh = new THREE.Mesh(
+      new THREE.PlaneGeometry(100, 100),
+      new THREE.MeshPhongMaterial({ color: 0xcbcbcb, depthWrite: false }),
+    );
+    mesh.rotation.x = -Math.PI / 2;
+    mesh.receiveShadow = true;
+    scene.add(mesh);
+
+    /**
      * Grid management
      */
     const radius = 10;
@@ -78,21 +90,26 @@ const Scene: React.FC = () => {
     const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
     const cube = new THREE.Mesh(geometry, material);
     cube.position.y = 0.5;
+    cube.castShadow = true; // Enable shadow casting for the cube
     scene.add(cube);
 
     /**
      * Light management
      */
-    // const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-    // scene.add(ambientLight);
-
-    // const pointLight = new THREE.PointLight(0xffffff, 0.5);
-    // pointLight.position.set(5, 5, 5);
-    // scene.add(pointLight);
-
     const hemiLight = new THREE.HemisphereLight(0xffffff, 0x8d8d8d, 3);
     hemiLight.position.set(0, 20, 0);
     scene.add(hemiLight);
+
+    const dirLight = new THREE.DirectionalLight(0xffffff, 3);
+    dirLight.position.set(3, 10, 10);
+    dirLight.castShadow = true;
+    dirLight.shadow.camera.top = 2;
+    dirLight.shadow.camera.bottom = -2;
+    dirLight.shadow.camera.left = -2;
+    dirLight.shadow.camera.right = 2;
+    dirLight.shadow.camera.near = 0.1;
+    dirLight.shadow.camera.far = 40;
+    scene.add(dirLight);
 
     /**
      * Animate (rendering)
