@@ -31,6 +31,13 @@ const Scene: React.FC = () => {
     renderer.shadowMap.enabled = true;
     mountRef.current.appendChild(renderer.domElement);
 
+    const handleResize = () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    };
+    window.addEventListener("resize", handleResize);
+
     /**
      * Camera controls
      */
