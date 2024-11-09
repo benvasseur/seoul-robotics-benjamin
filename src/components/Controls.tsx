@@ -1,14 +1,21 @@
 import React from "react";
 import { useAtom } from "jotai";
-import { modelPositionAtom } from "../atoms/stateAtoms";
+import { modelPositionAtom, modelRotationAtom } from "../atoms/stateAtoms";
 
 const Controls: React.FC = () => {
   const [position, setPosition] = useAtom(modelPositionAtom);
+  const [rotation, setRotation] = useAtom(modelRotationAtom);
 
   const handleInputChange = (axis: "x" | "y" | "z", value: string) => {
     const numericValue = parseFloat(value) || 0;
     setPosition({ ...position, [axis]: numericValue });
-    console.log(`position update: ${axis} = ${value}`);
+  };
+
+  const handleRotationChange = (
+    axis: "roll" | "pitch" | "yaw",
+    value: number,
+  ) => {
+    setRotation((prev) => ({ ...prev, [axis]: value }));
   };
 
   return (
@@ -25,6 +32,29 @@ const Controls: React.FC = () => {
               handleInputChange(axis as "x" | "y" | "z", e.target.value)
             }
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
+          />
+        </div>
+      ))}
+
+      <h2 className="text-lg font-semibold mb-2 mt-4">
+        Model Rotation (Degrees)
+      </h2>
+      {["roll", "pitch", "yaw"].map((axis) => (
+        <div key={axis} className="mb-2">
+          <label className="block text-gray-700">
+            {axis.charAt(0).toUpperCase() + axis.slice(1)}:
+          </label>
+          <input
+            type="number"
+            step="1"
+            value={rotation[axis as "roll" | "pitch" | "yaw"]}
+            onChange={(e) =>
+              handleRotationChange(
+                axis as "roll" | "pitch" | "yaw",
+                parseFloat(e.target.value),
+              )
+            }
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-200"
           />
         </div>
       ))}

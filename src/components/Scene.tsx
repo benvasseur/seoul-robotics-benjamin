@@ -3,18 +3,25 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useAtomValue } from "jotai";
-import { modelPositionAtom } from "../atoms/stateAtoms";
+import { modelPositionAtom, modelRotationAtom } from "../atoms/stateAtoms";
 
 const Scene: React.FC = () => {
   const mountRef = useRef<HTMLDivElement | null>(null);
 
   const initCamPos = { x: 4, y: 2, z: 0 };
   const modelPosition = useAtomValue(modelPositionAtom);
+  const modelRotation = useAtomValue(modelRotationAtom);
+
   const modelPositionRef = useRef(modelPosition);
+  const modelRotationRef = useRef(modelRotation);
 
   useEffect(() => {
     modelPositionRef.current = modelPosition;
   }, [modelPosition]);
+
+  useEffect(() => {
+    modelRotationRef.current = modelRotation;
+  }, [modelRotation]);
 
   useEffect(() => {
     if (!mountRef.current) return;
@@ -156,6 +163,11 @@ const Scene: React.FC = () => {
           modelPositionRef.current.x,
           modelPositionRef.current.y,
           modelPositionRef.current.z,
+        );
+        model.rotation.set(
+          THREE.MathUtils.degToRad(modelRotationRef.current.pitch),
+          THREE.MathUtils.degToRad(modelRotationRef.current.yaw),
+          THREE.MathUtils.degToRad(modelRotationRef.current.roll),
         );
       }
       controls.update();
