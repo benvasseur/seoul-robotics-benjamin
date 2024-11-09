@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 const Scene: React.FC = () => {
   const mountRef = useRef<HTMLDivElement | null>(null);
@@ -86,12 +87,27 @@ const Scene: React.FC = () => {
     /**
      * Model management
      */
-    const geometry = new THREE.BoxGeometry();
-    const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
-    const cube = new THREE.Mesh(geometry, material);
-    cube.position.y = 0.5;
-    cube.castShadow = true; // Enable shadow casting for the cube
-    scene.add(cube);
+    const loader = new GLTFLoader();
+    loader.load(
+      "/assets/models/Red_Car.glb",
+      (gltf) => {
+        const model = gltf.scene;
+        model.position.set(0, 0.25, 0);
+
+        model.castShadow = true;
+        model.traverse((child) => {
+          if ((child as THREE.Mesh).isMesh) {
+            child.castShadow = true;
+          }
+        });
+
+        scene.add(model);
+      },
+      undefined,
+      (error) => {
+        console.error("An error occurred while loading the model:", error);
+      },
+    );
 
     /**
      * Light management
