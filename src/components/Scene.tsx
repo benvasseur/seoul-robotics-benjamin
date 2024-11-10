@@ -41,7 +41,7 @@ const Scene: React.FC = () => {
     );
     camera.position.set(initCamPos.x, initCamPos.y, initCamPos.z);
 
-    const renderer = new THREE.WebGLRenderer();
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.shadowMap.enabled = true;
     mountRef.current.appendChild(renderer.domElement);
