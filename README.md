@@ -1,46 +1,47 @@
-# Getting Started with Create React App
+# Seoul Robotics - Frontend Engineer Coding Assignment
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
+This project was created for the Frontend Engineer assignment at Seoul Robotics. The task was to set up a 3D scene in a React app and build an interface to interact with it.
 
-## Available Scripts
+## Demo
+You can see a running version of the project [here](https://seoul-robotics-benjamin.netlify.app/).
 
-In the project directory, you can run:
+## Features
+### 3D Scene Setup
+- **3D Scene**: Built using `Three.js`.
+- **Camera Controls**: `OrbitControls` for panning and zooming with the mouse and keyboard.
+- **Lighting**: Added directional and hemisphere lighting for a realistic effect.
+- **Model**: Imported a 3D model with shadow support. The model used can be found [here](https://poly.pizza/m/dVLJ5CjB0h).
+- **Grid**: A helper grid for better orientation in the scene.
 
-### `npm start`
+### User Interface
+- **Position Controls**: Input fields to adjust the `x`, `y`, and `z` coordinates of the model.
+- **Rotation Controls**: Fields to modify the `roll`, `pitch`, and `yaw` of the model.
+- **Real-Time Updates**: Instant feedback in the 3D scene when values are changed.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Technologies Used
+- **React**
+- **TypeScript**
+- **Three.js**
+- **Jotai** for state management
+- **Tailwind CSS** for styling
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Installation
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/benvasseur/seoul-robotics-benjamin.git
+   cd seoul-robotics-frontend-assignment
+   ```
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+3. **Start the development server**:
+   ```bash
+   npm start
+   ```
 
-### `npm test`
+## How to Use
+- **Interact with the Scene**: Use the `W`, `A`, `S`, `D` keys to pan the camera and the `Space` bar to reset it.
+- **Adjust Position and Rotation**: Use the input controls to change the model’s position and rotation in real time.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
